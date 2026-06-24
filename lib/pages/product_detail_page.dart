@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:pertemuan10_2306011/models/product_model.dart';
-
+import 'dart:convert';
+import '../models/product_model.dart';
 
 class ProductDetailPage extends StatelessWidget {
   final ProductModel product;
@@ -11,22 +11,37 @@ class ProductDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text("Detail Produk")),
-      body: Padding(
-        padding: .all(20),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
         child: Column(
-          crossAxisAlignment: .start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            product.image.isNotEmpty
+                ? Image.memory(
+                    base64Decode(product.image),
+                    width: double.infinity,
+                    height: 250,
+                    fit: BoxFit.cover,
+                  )
+                : const Icon(Icons.image, size: 250),
+            const SizedBox(height: 20),
             Text(
               product.name,
-              style: TextStyle(fontSize: 24, fontWeight: .bold),
+              style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 10,),
-            Text("Rp ${product.price}"),
-            const SizedBox(height: 10,),
-            Text(product.description),
+            const SizedBox(height: 10),
+            Text(
+              "Rp ${product.price}",
+              style: const TextStyle(fontSize: 18, color: Colors.green),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              product.desc,
+              style: const TextStyle(fontSize: 16, color: Colors.black87),
+            ),
           ],
         ),
-        ),
+      ),
     );
   }
 }

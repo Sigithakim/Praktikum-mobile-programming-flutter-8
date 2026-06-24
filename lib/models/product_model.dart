@@ -1,44 +1,33 @@
 import 'dart:convert';
 
-class ProductModel{
-  //inisialisasi variabel data product
+class ProductModel {
   final String name;
-  final String description;
+  final String desc;
   final int price;
+  final String image;
 
-  //constructor untuk mengisi data
   ProductModel({
     required this.name,
-    required this.description,
+    required this.desc,
     required this.price,
+    required this.image,
   });
 
-  //object -> map
   Map<String, dynamic> toMap() {
-    return {
-      'name': name,
-      'description': description,
-      'price': price,
-    };
+    return {'name': name, 'desc': desc, 'price': price, 'image': image};
   }
 
-  //map -> object
-  factory ProductModel.fromMap
-  (Map<String, dynamic> map,
-  ) {
+  factory ProductModel.fromMap(Map<String, dynamic> map) {
     return ProductModel(
-    name: map['name'] ?? '',
-    description: map['description'] ?? '',
-    price: map['price'] ?? 0,
-  );
-}
+      name: map['name'] ?? '',
+      desc: map['desc'] ?? '',
+      price: map['price'] ?? 0,
+      image: map['image'] ?? '',
+    );
+  }
 
-  //object -> string
-  String toJson() => json.encode(toMap());
+  String toJson() => jsonEncode(toMap());
 
-  //json string -> object
-  factory ProductModel.fromJson(String source)
-    {
-      return ProductModel.fromMap(json.decode(source));
-    }
+  factory ProductModel.fromJson(String source) =>
+      ProductModel.fromMap(jsonDecode(source));
 }

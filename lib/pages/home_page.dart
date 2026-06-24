@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pertemuan10_2306011/pages/product_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../models/product_model.dart';
+import 'product_page.dart';
 import 'login_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,7 +14,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String username = '';
   List<ProductModel> products = [];
-  int totalProducts =0;
+  int totalProduct = 0;
 
   @override
   void initState() {
@@ -33,19 +33,14 @@ class _HomePageState extends State<HomePage> {
   Future<void> loadProducts() async {
     final prefs = await SharedPreferences.getInstance();
     List<String> productList = prefs.getStringList('products') ?? [];
-    totalProducts = productList.length;
+    totalProduct = productList.length;
     setState(() {
-      products = productList
-      .reversed
-      .take(3)
-      .map((item) => ProductModel.fromJson(item))
-      .toList();
+      products = productList.reversed
+          .take(3)
+          .map((item) => ProductModel.fromJson(item))
+          .toList();
     });
   }
-
-  
-
-  
 
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
@@ -68,8 +63,10 @@ class _HomePageState extends State<HomePage> {
               // Profile container
               Container(
                 height: 100,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15, vertical: 12),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 15,
+                  vertical: 12,
+                ),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
@@ -97,7 +94,9 @@ class _HomePageState extends State<HomePage> {
                           Text(
                             "Hai, Selamat Datang!",
                             style: TextStyle(
-                                fontSize: 14, color: Colors.grey[600]),
+                              fontSize: 14,
+                              color: Colors.grey[600],
+                            ),
                           ),
                           const SizedBox(height: 5),
                           Row(
@@ -145,13 +144,12 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               const SizedBox(height: 20),
-
               Row(
-                mainAxisAlignment: .spaceBetween,
+                mainAxisAlignment: .spaceAround,
                 children: [
-                  Text("Total Produk: ${totalProducts.toString()}"),
+                  Text("Total Produk: ${totalProduct.toString()}"),
                   TextButton(
-                    onPressed: (){
+                    onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -159,8 +157,8 @@ class _HomePageState extends State<HomePage> {
                         ),
                       );
                     },
-                    child: const Text ("Lihat Selengkapnya"),
-                  )
+                    child: const Text("Lihat Semua"),
+                  ),
                 ],
               ),
             ],
